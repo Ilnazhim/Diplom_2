@@ -48,5 +48,3 @@ class TestCreateOrder:
         order = Orders.create_order_without_auth(ingredients)
 
         assert order.status_code == 200 and order.json()['success'] is True
-
-

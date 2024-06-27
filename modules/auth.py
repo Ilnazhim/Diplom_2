@@ -35,4 +35,3 @@ class Auth:
     def edit_user_data_without_auth(field):
         edit_data = requests.patch(Urls.BASE_URL + Urls.EDIT_USER_URL, field)
         return edit_data
-

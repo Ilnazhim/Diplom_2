@@ -39,9 +39,3 @@ class TestCreateUser:
         user = Auth.create_user(user_body)
 
         assert user.status_code == 403 and user.json()['message'] == Messages.REQUIRED_FIELDS
-
-
-
-
-
-
