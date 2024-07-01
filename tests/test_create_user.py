@@ -17,11 +17,10 @@ class TestCreateUser:
         assert user.json()['success'] is True
 
     @allure.title('Создание пользователя, который уже зарегистрирован')
-    def test_create_existing_user(self):
+    def test_create_existing_user(self, create_user, delete_user):
         user_body = UserData.generate_fake_user_data()
         user = Auth.create_user(user_body)
         user_v2 = Auth.create_user(user_body)
-        Auth.delete_user(user)
 
         assert user_v2.status_code == 403
         assert user_v2.json()['message'] == Messages.EXISTING_USER

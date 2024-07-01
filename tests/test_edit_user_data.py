@@ -14,13 +14,10 @@ class TestEditUserData:
                                  pytest.param('name', id='test editing name field')
                              ]
                              )
-    def test_edit_user(self, field):
+    def test_edit_user(self, field, create_user, delete_user):
         user_body = UserData.generate_fake_user_data()
-        user = Auth.create_user(user_body)
         new_field = {field: 'changes' + str(user_body[field])}
-        edit_user_data = Auth.edit_user_data(user, new_field)
-
-        Auth.delete_user(user)
+        edit_user_data = Auth.edit_user_data(create_user, new_field)
 
         assert edit_user_data.status_code == 200
         assert edit_user_data.json()['success'] is True
@@ -33,13 +30,10 @@ class TestEditUserData:
                                  pytest.param('name', id='тест с полем name')
                              ]
                              )
-    def test_edit_user_without_auth(self, field):
+    def test_edit_user_without_auth(self, field, delete_user):
         user_body = UserData.generate_fake_user_data()
-        user = Auth.create_user(user_body)
         new_field = {field: 'changes' + str(user_body[field])}
         edit_user_data = Auth.edit_user_data_without_auth(new_field)
-
-        Auth.delete_user(user)
 
         assert edit_user_data.status_code == 401
         assert edit_user_data.json()['message'] == Messages.WITHOUT_AUTH

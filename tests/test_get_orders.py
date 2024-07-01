@@ -1,20 +1,14 @@
 import allure
-from modules.auth import Auth
 from modules.orders import Orders
-from helper import UserData
 from src import Messages
 from data import Data
 
 
 class TestGetOrders:
     @allure.title('Получение заказов конкретного пользователя: с авторизацией')
-    def test_get_user_orders(self):
-        user_body = UserData.generate_fake_user_data()
-        user = Auth.create_user(user_body)
-        Orders.create_order(user, Data.ingredients)
-        orders_list = Orders.get_orders(user)
-
-        Auth.delete_user(user)
+    def test_get_user_orders(self, create_user, delete_user):
+        Orders.create_order(create_user, Data.ingredients)
+        orders_list = Orders.get_orders(create_user)
 
         assert orders_list.status_code == 200
         assert 'orders' in orders_list.json()
