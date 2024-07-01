@@ -14,7 +14,8 @@ class TestUserLogin:
 
         Auth.delete_user(user)
 
-        assert login.status_code == 200 and 'accessToken' in login.json()
+        assert login.status_code == 200
+        assert 'accessToken' in login.json()
 
     @allure.title('Логин пользователя: логин с неверным логином и паролем')
     @pytest.mark.parametrize('field',
@@ -32,4 +33,5 @@ class TestUserLogin:
 
         Auth.delete_user(user)
 
-        assert login.status_code == 401 and login.json()['message'] == Messages.INCORRECT_DATA
+        assert login.status_code == 401
+        assert login.json()['message'] == Messages.INCORRECT_DATA

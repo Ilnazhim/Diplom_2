@@ -22,7 +22,8 @@ class TestEditUserData:
 
         Auth.delete_user(user)
 
-        assert edit_user_data.status_code == 200 and edit_user_data.json()['success'] is True
+        assert edit_user_data.status_code == 200
+        assert edit_user_data.json()['success'] is True
 
     @allure.title('Изменение данных пользователя: без авторизации')
     @pytest.mark.parametrize('field',
@@ -40,4 +41,5 @@ class TestEditUserData:
 
         Auth.delete_user(user)
 
-        assert edit_user_data.status_code == 401 and edit_user_data.json()['message'] == Messages.WITHOUT_AUTH
+        assert edit_user_data.status_code == 401
+        assert edit_user_data.json()['message'] == Messages.WITHOUT_AUTH

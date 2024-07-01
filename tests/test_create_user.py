@@ -11,20 +11,20 @@ class TestCreateUser:
     def test_create_user(self):
         user_body = UserData.generate_fake_user_data()
         user = Auth.create_user(user_body)
-
         Auth.delete_user(user)
 
         assert user.status_code == 200
+        assert user.json()['success'] is True
 
     @allure.title('Создание пользователя, который уже зарегистрирован')
     def test_create_existing_user(self):
         user_body = UserData.generate_fake_user_data()
         user = Auth.create_user(user_body)
         user_v2 = Auth.create_user(user_body)
-
         Auth.delete_user(user)
 
-        assert user_v2.status_code == 403 and user_v2.json()['message'] == Messages.EXISTING_USER
+        assert user_v2.status_code == 403
+        assert user_v2.json()['message'] == Messages.EXISTING_USER
 
     @allure.title('Создание пользователя без обязательного поля')
     @pytest.mark.parametrize('field',
@@ -38,4 +38,5 @@ class TestCreateUser:
         user_body = UserData.generate_fake_user_data().pop(field)
         user = Auth.create_user(user_body)
 
-        assert user.status_code == 403 and user.json()['message'] == Messages.REQUIRED_FIELDS
+        assert user.status_code == 403
+        assert user.json()['message'] == Messages.REQUIRED_FIELDS

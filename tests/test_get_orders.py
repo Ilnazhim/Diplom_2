@@ -16,10 +16,12 @@ class TestGetOrders:
 
         Auth.delete_user(user)
 
-        assert orders_list.status_code == 200 and 'orders' in orders_list.json()
+        assert orders_list.status_code == 200
+        assert 'orders' in orders_list.json()
 
     @allure.title('Получение заказов конкретного пользователя: без авторизации')
     def test_get_user_orders_without_auth(self):
         orders_list = Orders.get_orders_without_auth()
 
-        assert orders_list.status_code == 401 and orders_list.json()['message'] == Messages.WITHOUT_AUTH
+        assert orders_list.status_code == 401
+        assert orders_list.json()['message'] == Messages.WITHOUT_AUTH

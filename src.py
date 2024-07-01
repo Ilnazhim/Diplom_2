@@ -13,3 +13,4 @@ class Messages:
     INCORRECT_DATA = 'email or password are incorrect'
     WITHOUT_AUTH = 'You should be authorised'
     ORDER_WITHOUT_INGRD = 'Ingredient ids must be provided'
+    INTERNAL_SERVER_ERROR = 'Internal Server Error'
